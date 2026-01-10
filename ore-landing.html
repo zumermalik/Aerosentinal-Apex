@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX | AeroSentinel</title>
+    
+    <!-- Codec Pro Font CDN -->
+    <link href="https://fonts.cdnfonts.com/css/codec-pro" rel="stylesheet">
+    
+    <style>
+        /* Pure Black Minimalist Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Codec Pro', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* GitHub Star Position */
+        .github-corner {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 100;
+        }
+
+        /* Content Layout */
+        .container {
+            max-width: 750px;
+            width: 100%;
+        }
+
+        .brand-label {
+            font-weight: 300;
+            font-size: 12px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: clamp(3.5rem, 12vw, 6rem);
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #777;
+            margin-bottom: 60px;
+            letter-spacing: -0.01em;
+        }
+
+        .description {
+            font-weight: 400;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #a1a1a1;
+        }
+
+        .description p {
+            margin-bottom: 24px;
+        }
+
+        .white {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Animation */
+        .reveal {
+            animation: revealUp 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes revealUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .github-corner {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            body {
+                justify-content: flex-start;
+                padding-top: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GitHub Star Button (Linked to your repo) -->
+    <div class="github-corner">
+        <a class="github-button" 
+           href="https://github.com/zumermalik/Aerosentinal-Apex" 
+           data-color-scheme="no-preference: dark; light: dark; dark: dark;" 
+           data-icon="octicon-star" 
+           data-size="large" 
+           data-show-count="true" 
+           aria-label="Star zumermalik/Aerosentinal-Apex on GitHub">Star</a>
+    </div>
+
+    <main class="container">
+        <span class="brand-label reveal" style="animation-delay: 0.1s;">AeroSentinel</span>
+        
+        <h1 class="reveal" style="animation-delay: 0.2s;">APEX</h1>
+        
+        <p class="tagline reveal" style="animation-delay: 0.3s;">
+            Anomaly Prediction & Explanation Platform
+        </p>
+        
+        <div class="description reveal" style="animation-delay: 0.5s;">
+            <p>
+                Flight test programs lose millions annually to undetected system degradation. 
+                Engineers manually analyze terabytes of multi-sensor data weeks after flights, 
+                missing critical failure patterns hidden across 500+ interconnected parameters.
+            </p>
+
+            <p>
+                <span class="white">APEX</span> solves this with real-time AI-powered anomaly detection and predictive analysis. 
+                Our physics-informed neural networks identify cascading failures <span class="white">5-10 minutes before they become critical</span>, 
+                while our digital twin visualization replays flights with predictive overlays.
+            </p>
+
+            <p>
+                Using explainable AI, we generate natural language insights aerospace engineers can trust and act upon 
+                immediately—transforming reactive data analysis into proactive flight safety intelligence.
+            </p>
+        </div>
+    </main>
+
+    <!-- GitHub Buttons Script -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</body>
+</html>
