@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroSentinel APEX | Flight Test Intelligence</title>
+    
+    <!-- Modern Tech Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg: #000000;
+            --bg-card: #0a0a0a;
+            --text: #ffffff;
+            --text-dim: #909090;
+            --accent: #0066ff;
+            --cyan: #00ffff;
+            --border: #1a1a1a;
+            --grid: rgba(0, 212, 255, 0.04);
+        }
+
+        .light-mode {
+            --bg: #f5f5f7;
+            --bg-card: #ffffff;
+            --text: #1d1d1f;
+            --text-dim: #6e6e73;
+            --accent: #0071e3;
+            --cyan: #00c2ff;
+            --border: #d2d2d7;
+            --grid: rgba(0, 0, 0, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Grid Background */
+        #grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo span { color: var(--cyan); }
+
+        .header-actions { display: flex; align-items: center; gap: 1rem; }
+
+        .gh-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.8rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .gh-link:hover { border-color: var(--cyan); }
+
+        .toggle {
+            width: 40px;
+            height: 20px;
+            background: var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--cyan);
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+        }
+
+        .light-mode .toggle-dot { transform: translateX(20px); }
+
+        /* Hero */
+        .hero {
+            padding: 10rem 10% 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero .tagline {
+            color: var(--cyan);
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
+        /* Features */
+        .features { padding: 4rem 10% 2rem; }
+
+        .section-header {
+            margin-bottom: 2rem;
+            border-left: 2px solid var(--cyan);
+            padding-left: 1.5rem;
+        }
+
+        .section-header h2 { font-size: 1.4rem; letter-spacing: -0.5px; }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .f-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .f-card:hover { border-color: var(--accent); }
+
+        .f-card i { color: var(--cyan); margin-bottom: 1rem; display: block; }
+
+        .f-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+
+        .f-card p { font-size: 0.85rem; color: var(--text-dim); }
+
+        /* External References */
+        .research { padding: 4rem 10% 8rem; }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .r-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        .r-card:hover { border-color: var(--cyan); }
+
+        .r-card span { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--accent); text-transform: uppercase; }
+
+        .r-card h4 { margin: 0.75rem 0; font-size: 1.1rem; line-height: 1.4; }
+
+        .r-card p { font-size: 0.85rem; color: var(--text-dim); }
+
+        /* Footer */
+        footer {
+            padding: 3rem 10%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(15px); transition: 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .research-grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="grid"></div>
+
+    <header>
+        <a href="#" class="logo">a<span>[</span>e<span>]</span>x</a>
+        <div class="header-actions">
+            <a href="https://github.com/zumermalik/apex-by-aerosenital" target="_blank" class="gh-link">
+                <i data-lucide="github" size="14"></i>
+                <span class="mono">Star Us</span>
+            </a>
+            <div class="toggle" onclick="toggleTheme()">
+                <div class="toggle-dot"></div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="tagline mono reveal">Next-Gen Flight Intelligence</div>
+            <h1 class="reveal">AeroSentinel APEX</h1>
+            <p class="reveal">Transformer-based anomaly detection and real-time aircraft monitoring for high-fidelity aerospace testing.</p>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="section-header reveal">
+                <p class="mono" style="font-size: 0.65rem; color: var(--accent); margin-bottom: 0.3rem;">[ 01 ] CAPABILITIES</p>
+                <h2>Platform Features</h2>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="f-card reveal">
+                    <i data-lucide="activity" size="18"></i>
+                    <h3>Anomaly Detection</h3>
+                    <p>Monitors 500+ sensors simultaneously, identifying subtle shifts that human analysts might miss.</p>
+                </div>
+                <div class="f-card reveal">
+                    <i data-lucide="gauge" size="18"></i>
+                    <h3>Predictive Analysis</h3>
+                    <p>Physics-informed neural networks forecast potential sensor or component issues before they occur.</p>
+                </div>
+                <div class="f-card reveal">
+                    <i data-lucide="message-square" size="18"></i>
+                    <h3>Explainable AI</h3>
+                    <p>Provides context on why alerts were triggered, turning complex data into actionable insights.</p>
+                </div>
+                <div class="f-card reveal">
+                    <i data-lucide="layers" size="18"></i>
+                    <h3>Digital Twin Sync</h3>
+                    <p>Syncs live data with virtual aircraft models for high-fidelity 3D structural analysis.</p>
+                </div>
+                <div class="f-card reveal">
+                    <i data-lucide="terminal" size="18"></i>
+                    <h3>Hardware Agnostic</h3>
+                    <p>Pure software solution designed to integrate with existing avionics and sensor systems.</p>
+                </div>
+                <div class="f-card reveal">
+                    <i data-lucide="clipboard-check" size="18"></i>
+                    <h3>Certification Ready</h3>
+                    <p>Simplifies compliance by automatically generating standardized reports from flight test data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- References Section -->
+        <section class="research">
+            <div class="section-header reveal">
+                <p class="mono" style="font-size: 0.65rem; color: var(--accent); margin-bottom: 0.3rem;">[ 02 ] SCIENTIFIC CONTEXT</p>
+                <h2>Industry References</h2>
+            </div>
+            <div class="research-grid">
+                <a href="https://www.sciencedirect.com/science/article/pii/S2590123024019856" target="_blank" class="r-card reveal">
+                    <span>Reference / ScienceDirect</span>
+                    <h4>Machine Learning for Structural Integrity</h4>
+                    <p>External research regarding neural architectures for monitoring aircraft structural fatigue and health.</p>
+                </a>
+                <a href="https://www.sciencepublishinggroup.com/article/10.11648/j.jccee.20251002.12" target="_blank" class="r-card reveal">
+                    <span>Reference / Science Publishing Group</span>
+                    <h4>Predictive Aircraft Maintenance Systems</h4>
+                    <p>External analysis of AI integration within aviation frameworks to improve safety and longevity.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-text mono">© 2026 AEROSENTINEL APEX</div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        document.addEventListener('mousemove', (e) => {
+            const grid = document.getElementById('grid');
+            const x = (e.clientX / window.innerWidth - 0.5) * 12;
+            const y = (e.clientY / window.innerHeight - 0.5) * 12;
+            grid.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>
